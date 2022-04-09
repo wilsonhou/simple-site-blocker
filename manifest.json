@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Simple Site Blocker",
+  "version": "0.0.1",
+  "description": "Block sites from loading.",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "offline_enabled": true
+}
