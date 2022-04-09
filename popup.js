@@ -1,21 +1,51 @@
-// function updateBlockedSitesList() {
-//   alert("nice");
-// }
+const renderBlockedSites = (blockedSites) => {
+  const blockedSitesList = document.getElementById("blocked");
+  blockedSitesList.innerHTML = "";
+  if (blockedSites) {
+    blockedSites.forEach((site) => {
+      const li = document.createElement("li");
+      li.innerHTML = `<li><a href="${site}">${site}</a></li>`;
+      blockedSitesList.appendChild(li);
+    });
+  }
+};
 
-// // add an event listener to the button
-// document.querySelector("#submit").addEventListener("click", function () {
-//   // get the value from the input box
-//   var value = document.querySelector("#input").value;
+const resetBlockedSites = () => {
+  chrome.storage.sync.set({ blockedSites: [] });
+};
 
-//   // get the current blockedSites list
-//   chrome.storage.sync.get(["blockedSites"], function (result) {
-//     // set the value in the chrome storage
-//     console.log(result);
-//     console.log(value);
-//     chrome.storage.sync.set({ blockedSites: [value] }, function () {
-//       // show the value in the popup
-//     });
-//   });
+// initially set the blockedSites array to an empty array
+chrome.storage.sync.get(["blockedSites"], function (result) {
+  if (!result.blockedSites) {
+    resetBlockedSites();
+  }
+  renderBlockedSites(!!result.blockedSites ? result.blockedSites : []);
+});
 
-//   updateBlockedSitesList();
-// });
+document.querySelector("#submit").addEventListener("click", function () {
+  // get the value from the input box
+  var value = document.querySelector("#input").value;
+
+  if (!value) return;
+  // check if value contains "."
+  if (value.indexOf(".") === -1) return;
+
+  // get the current blockedSites list
+  chrome.storage.sync.get(["blockedSites"], (result) => {
+    // set the value in the chrome storage
+    const newBlockedSites = !!result.blockedSites
+      ? [...result.blockedSites, value]
+      : [value];
+    // filter duplicates without a set
+    const uniqueBlockedSites = [...new Set(newBlockedSites)];
+
+    chrome.storage.sync.set({ blockedSites: uniqueBlockedSites }, () =>
+      renderBlockedSites(uniqueBlockedSites)
+    );
+  });
+});
+
+document.querySelector("#clear").addEventListener("click", () => {
+  resetBlockedSites();
+  renderBlockedSites([]);
+});

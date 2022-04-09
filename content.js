@@ -1,14 +1,3 @@
-// Instructions: Add to this list any websites you want to block.
-// use the format: "example.com"
-// All comma separated values will be treated as separate entries.
-// ****CHANGE ME****
-const BLOCKED_LIST = [
-  "instagram.com",
-  "twitter.com",
-  "messenger.com",
-  "facebook.com",
-];
-
 const blockPage = () => {
   const body = document.querySelector("body");
 
@@ -51,14 +40,12 @@ const blockPage = () => {
   body.appendChild(cover);
 };
 
-const checkBlocked = () => {
+// check if url contains substring any of the blocked sites
+chrome.storage.sync.get(["blockedSites"], (result) => {
   const url = window.location.href;
-  for (let i = 0; i < BLOCKED_LIST.length; i++) {
-    if (url.includes(BLOCKED_LIST[i])) {
+  for (let i = 0; i < result.blockedSites.length; i++) {
+    if (url.includes(result.blockedSites[i])) {
       blockPage();
     }
   }
-};
-
-// check if url contains substring any of the blocked sites
-checkBlocked();
+});
