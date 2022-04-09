@@ -6,7 +6,7 @@ No settings page yet oops (coming soon).
 
 ### Instructions
 
-1. Clone this repository with `git clone https://github.com/wilsonhou/simple-site-blocker.git` or Download the Zip File.
+1. Clone this repository with `git clone https://github.com/wilsonhou/simple-site-blocker.git` or Click Green "Code" button and download the ZIP File, then unzip.
 2. Go open `content.js` in a text editor.
 3. Follow the instructions to update "BLOCKED_SITES" array.
 4. Go to `chrome://extensions`
