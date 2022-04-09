@@ -12,5 +12,6 @@
       "js": ["content.js"]
     }
   ],
+  "permissions": ["storage"],
   "offline_enabled": true
 }

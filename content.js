@@ -1,4 +1,14 @@
-// get page url
+// Instructions: Add to this list any websites you want to block.
+// use the format: "example.com"
+// All comma separated values will be treated as separate entries.
+// ****CHANGE ME****
+const BLOCKED_LIST = [
+  "instagram.com",
+  "twitter.com",
+  "messenger.com",
+  "facebook.com",
+];
+
 const blockPage = () => {
   const body = document.querySelector("body");
 
@@ -42,21 +52,13 @@ const blockPage = () => {
 };
 
 const checkBlocked = () => {
-  for (let i = 0; i < blockedList.length; i++) {
-    if (url.includes(blockedList[i])) {
+  const url = window.location.href;
+  for (let i = 0; i < BLOCKED_LIST.length; i++) {
+    if (url.includes(BLOCKED_LIST[i])) {
       blockPage();
     }
   }
 };
-
-const url = window.location.href;
-
-const blockedList = [
-  "instagram.com",
-  "twitter.com",
-  "messenger.com",
-  "facebook.com",
-];
 
 // check if url contains substring any of the blocked sites
 checkBlocked();
